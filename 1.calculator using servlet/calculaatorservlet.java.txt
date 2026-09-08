@@ -1,0 +1,72 @@
+package calculatorservlet;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet("/calculatorservlet")
+public class calculatorservlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("text/html");
+
+        PrintWriter out = response.getWriter();
+
+        // Read input values
+        double num1 = Double.parseDouble(request.getParameter("num1"));
+        double num2 = Double.parseDouble(request.getParameter("num2"));
+        String operation = request.getParameter("operation");
+
+        double result = 0;
+        String symbol = "";
+
+        // Perform calculation
+        switch (operation) {
+
+            case "add":
+                result = num1 + num2;
+                symbol = "+";
+                break;
+
+            case "sub":
+                result = num1 - num2;
+                symbol = "-";
+                break;
+
+            case "mul":
+                result = num1 * num2;
+                symbol = "*";
+                break;
+
+            case "div":
+                if (num2 != 0) {
+                    result = num1 / num2;
+                    symbol = "/";
+                } else {
+                    out.println("<h3>Error: Division by zero is not allowed</h3>");
+                    out.println("<a href='index.html'>Back</a>");
+                    return;
+                }
+                break;
+        }
+
+        // Display result
+        out.println("<h2>Result: " + num1 + " "
+                + symbol + " " + num2 + " = "
+                + result + "</h2>");
+
+        out.println("<a href='index.html'>Back</a>");
+    }
+}

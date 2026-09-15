@@ -1,6 +1,6 @@
-CREATE DATABASE batchb;
+CREATE DATABASE batchc;
 
-USE batchb;
+USE batchc;
 
 CREATE TABLE users (
     username VARCHAR(50),
